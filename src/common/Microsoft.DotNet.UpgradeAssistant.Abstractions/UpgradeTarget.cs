@@ -7,6 +7,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
     {
         LTS,
         Current,
-        Preview
+        Preview,
+        Keep
     }
 }

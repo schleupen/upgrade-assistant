@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -34,6 +35,11 @@ namespace Microsoft.DotNet.UpgradeAssistant.TargetFramework
             if (project is null)
             {
                 throw new ArgumentNullException(nameof(project));
+            }
+
+            if (_selectorOptions.TargetTfmSupport == UpgradeTarget.Keep)
+            {
+                return project.TargetFrameworks.Single();
             }
 
             var appBase = _selectorOptions.TargetTfmSupport switch

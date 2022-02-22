@@ -23,6 +23,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
         public const string Net462 = "net462";
         public const string Net47 = "net47";
         public const string Net471 = "net471";
+        public const string Net472 = "net472";
         public const string Net48 = "net48";
         public const string Net50 = "net5.0";
         public const string Net50_Windows = "net5.0-windows";
@@ -41,6 +42,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
         public const string Current = Net50;
         public const string Preview = Net60;
         public const string LTS = NetCoreApp31;
+        public const string Keep = Net472;
 
 #pragma warning restore CA1707 // Identifiers should not contain underscores
 
@@ -58,6 +60,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
             { Net462, TargetFrameworkMoniker.Net462 },
             { Net47, TargetFrameworkMoniker.Net47 },
             { Net471, TargetFrameworkMoniker.Net471 },
+            { Net472, TargetFrameworkMoniker.Net472 },
             { Net48, TargetFrameworkMoniker.Net48 },
             { Net50, TargetFrameworkMoniker.Net50 },
             { Net50_Windows, TargetFrameworkMoniker.Net50_Windows },
