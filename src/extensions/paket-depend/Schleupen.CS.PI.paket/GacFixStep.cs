@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.UpgradeAssistant;
 using Microsoft.Extensions.Logging;
 
-namespace Schleupen.CS.PI.paket
+namespace Schleupen.CS.PI.Paket
 {
     internal class GacFixStep : UpgradeStep
     {
         private IEnumerable<UpgradeStep>? _substeps;
+
         public GacFixStep(ILogger<GacFixStep> logger)
             : base(logger)
         {
-
         }
 
         public override IEnumerable<string> DependsOn { get; } = new[]
@@ -70,13 +70,12 @@ namespace Schleupen.CS.PI.paket
             }
         }
 
-        protected override Task<UpgradeStepApplyResult> ApplyImplAsync(IUpgradeContext context, CancellationToken token) => 
+        protected override Task<UpgradeStepApplyResult> ApplyImplAsync(IUpgradeContext context, CancellationToken token) =>
             Task.FromResult(new UpgradeStepApplyResult(UpgradeStepStatus.Complete, "All projects in solution has correct alias"));
 
         private class ProjectGacFixStep : UpgradeStep
         {
             private readonly IProject _project;
-            private string[] _referenceLines;
 
             public ProjectGacFixStep(IProject project, ILogger logger)
                 : base(logger)
@@ -90,14 +89,19 @@ namespace Schleupen.CS.PI.paket
 
             protected override Task<UpgradeStepInitializeResult> InitializeImplAsync(IUpgradeContext context, CancellationToken token)
             {
-                var projectDir = _project.FileInfo.Directory.FullName;
+                var projectDir = _project?.FileInfo?.Directory?.FullName;
+                if (projectDir == null)
+                {
+                    return Task.FromResult(new UpgradeStepInitializeResult(UpgradeStepStatus.Skipped, "no reference to System.Management.Automation found", BuildBreakRisk.Low));
+                }
+
                 var paketReferencFile = new FileInfo(Path.Combine(projectDir, "paket.references"));
                 if (!paketReferencFile.Exists)
                 {
                     return Task.FromResult(new UpgradeStepInitializeResult(UpgradeStepStatus.Skipped, "paket.reference not found", BuildBreakRisk.Low));
                 }
 
-                if(_project.References.Any(r => r.Name.Equals("System.Management.Automation", StringComparison.OrdinalIgnoreCase)))
+                if (_project?.References.Any(r => r.Name.Equals("System.Management.Automation", StringComparison.OrdinalIgnoreCase)) == true)
                 {
                     return Task.FromResult(new UpgradeStepInitializeResult(UpgradeStepStatus.Incomplete, $"found reference to System.Management.Automation", BuildBreakRisk.Low));
                 }
@@ -107,7 +111,12 @@ namespace Schleupen.CS.PI.paket
 
             protected override async Task<UpgradeStepApplyResult> ApplyImplAsync(IUpgradeContext context, CancellationToken token)
             {
-                var projectDir = _project.FileInfo.Directory.FullName;
+                var projectDir = _project.FileInfo?.Directory?.FullName;
+                if (projectDir == null)
+                {
+                    return new UpgradeStepApplyResult(UpgradeStepStatus.Skipped, "no reference moved");
+                }
+
                 var paketReferencFile = new FileInfo(Path.Combine(projectDir, "paket.references"));
 
                 var reference = _project.References.Where(r => r.Name.Equals("System.Management.Automation", StringComparison.OrdinalIgnoreCase));
@@ -116,15 +125,14 @@ namespace Schleupen.CS.PI.paket
                 {
                     _project.GetFile().RemoveReferences(reference);
 
-                    var paketContents = (await File.ReadAllLinesAsync(paketReferencFile.FullName)).ToList();
+                    var paketContents = (await File.ReadAllLinesAsync(paketReferencFile.FullName, token).ConfigureAwait(false)).ToList();
                     if (!paketContents.Any(x => x.Equals("System.Management.Automation", StringComparison.OrdinalIgnoreCase)))
                     {
                         paketContents.Add("System.Management.Automation");
-                        await File.WriteAllLinesAsync(paketReferencFile.FullName, paketContents);
-                        await _project.GetFile().SaveAsync(token);
+                        await File.WriteAllLinesAsync(paketReferencFile.FullName, paketContents, token).ConfigureAwait(false);
+                        await _project.GetFile().SaveAsync(token).ConfigureAwait(false);
                         return new UpgradeStepApplyResult(UpgradeStepStatus.Complete, "reference moved");
                     }
-                    
                 }
 
                 return new UpgradeStepApplyResult(UpgradeStepStatus.Skipped, "no reference moved");

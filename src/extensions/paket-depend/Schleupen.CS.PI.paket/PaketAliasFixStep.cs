@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.UpgradeAssistant;
 using Microsoft.Extensions.Logging;
 
-namespace Schleupen.CS.PI.paket
+namespace Schleupen.CS.PI.Paket
 {
     internal class PaketAliasFixStep : UpgradeStep
     {

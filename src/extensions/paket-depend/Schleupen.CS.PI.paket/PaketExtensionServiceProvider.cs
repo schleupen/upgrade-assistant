@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.UpgradeAssistant;
 using Microsoft.DotNet.UpgradeAssistant.Extensions;
 
-namespace Schleupen.CS.PI.paket
+namespace Schleupen.CS.PI.Paket
 {
     public class PaketExtensionServiceProvider : IExtensionServiceProvider
     {
