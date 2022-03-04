@@ -29,12 +29,12 @@ namespace Microsoft.DotNet.UpgradeAssistant.Extensions.Default
 
         private static void AddUpgradeSteps(IExtensionServiceCollection services)
         {
-            services.AddBackupStep();
-            services.AddConfigUpdaterStep();
-            services.AddPackageUpdaterStep();
+            //services.AddBackupStep();
+           // services.AddConfigUpdaterStep();
+           // services.AddPackageUpdaterStep();
             services.AddSolutionSteps();
-            services.AddSourceUpdaterStep();
-            services.AddTemplateInserterStep();
+            //services.AddSourceUpdaterStep();
+            //services.AddTemplateInserterStep();
         }
 
         // This extension only adds default analyzers and code fix providers, but other extensions

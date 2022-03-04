@@ -30,7 +30,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Configuration
         public override IEnumerable<string> DependsOn { get; } = new[]
         {
             // Project should be backed up before changing things based on config files
-            WellKnownStepIds.BackupStepId,
+            //WellKnownStepIds.BackupStepId,
 
             // Template files should be added prior to making config updates (since some IConfigUpdaters may change added templates)
             WellKnownStepIds.TemplateInserterStepId

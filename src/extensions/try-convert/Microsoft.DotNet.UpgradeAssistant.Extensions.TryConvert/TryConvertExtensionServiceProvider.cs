@@ -20,15 +20,15 @@ namespace Microsoft.DotNet.UpgradeAssistant.Extensions.TryConvert
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.Services.AddUpgradeStep<SetTFMStep>();
+            //services.Services.AddUpgradeStep<SetTFMStep>();
 
-            if (FeatureFlags.IsSolutionWideSdkConversionEnabled)
+            //if (FeatureFlags.IsSolutionWideSdkConversionEnabled)
             {
                 services.Services.AddUpgradeStep<SdkStyleConversionSolutionWideStep>();
             }
-            else
+            //else
             {
-                services.Services.AddUpgradeStep<TryConvertProjectConverterStep>();
+                //services.Services.AddUpgradeStep<TryConvertProjectConverterStep>();
             }
 
             services.Services.AddTransient<ITryConvertTool, TryConvertInProcessTool>();

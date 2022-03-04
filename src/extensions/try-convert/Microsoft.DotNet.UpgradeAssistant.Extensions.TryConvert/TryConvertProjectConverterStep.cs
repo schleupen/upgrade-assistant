@@ -19,11 +19,12 @@ namespace Microsoft.DotNet.UpgradeAssistant.Extensions.TryConvert
 
         public override string Id => WellKnownStepIds.TryConvertProjectConverterStepId;
 
-        public override IEnumerable<string> DependsOn { get; } = new[]
+        public override IEnumerable<string> DependsOn { get; } = Array.Empty<string>(); 
+        /*
         {
             // Project should be backed up before changing package references
             WellKnownStepIds.BackupStepId,
-        };
+        };*/
 
         public override IEnumerable<string> DependencyOf { get; } = new[]
         {

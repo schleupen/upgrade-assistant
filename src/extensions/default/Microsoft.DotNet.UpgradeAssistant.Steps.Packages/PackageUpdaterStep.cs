@@ -34,13 +34,13 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Packages
         public override IEnumerable<string> DependsOn { get; } = new[]
         {
             // Project should be backed up before changing package references
-            WellKnownStepIds.BackupStepId,
+            //WellKnownStepIds.BackupStepId,
 
             // Project should be SDK-style before changing package references
             WellKnownStepIds.TryConvertProjectConverterStepId,
 
             // Project should have correct TFM
-            WellKnownStepIds.SetTFMStepId,
+            //WellKnownStepIds.SetTFMStepId,
         };
 
         public override IEnumerable<string> DependencyOf { get; } = new[]

@@ -1,0 +1,7 @@
+﻿{
+  "ExtensionName": "paket-depend",
+
+  "ExtensionServiceProviders": [
+    "Schleupen.CS.PI.paket.dll"
+  ]
+}

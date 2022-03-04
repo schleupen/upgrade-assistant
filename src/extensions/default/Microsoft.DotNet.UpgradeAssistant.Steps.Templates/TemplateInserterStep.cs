@@ -42,7 +42,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Templates
         public override IEnumerable<string> DependsOn { get; } = new[]
         {
             // Project should be backed up before adding template files
-            WellKnownStepIds.BackupStepId,
+            //WellKnownStepIds.BackupStepId,
 
             // Project should be SDK-style before adding template files
             WellKnownStepIds.TryConvertProjectConverterStepId,

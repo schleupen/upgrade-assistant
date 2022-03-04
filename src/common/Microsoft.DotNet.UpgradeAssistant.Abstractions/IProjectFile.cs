@@ -23,6 +23,8 @@ namespace Microsoft.DotNet.UpgradeAssistant
 
         void AddPackages(IEnumerable<NuGetReference> packages);
 
+        void AddPackagesWithAlias(IEnumerable<PackageWithAliasReference> references);
+
         void RemovePackages(IEnumerable<NuGetReference> packages);
 
         void RemoveReferences(IEnumerable<Reference> references);

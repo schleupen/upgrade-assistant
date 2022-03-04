@@ -54,13 +54,14 @@ namespace Microsoft.DotNet.UpgradeAssistant.Extensions.TryConvert
 
             if (_substeps is null)
             {
-                var all = context.EntryPoints.PostOrderTraversal(t => t.ProjectReferences)
+                var all = context.Projects
+                    .Where(p => !p.GetFile().IsSdk)
                     .Select(p => (new ProjectSdkConversionStep(_runner, p.FileInfo, Logger), p.GetFile().IsSdk))
                     .ToList();
 
                 _substeps = all.Select(a => a.Item1);
 
-                if (all.All(a => a.IsSdk))
+                if (!all.Any())
                 {
                     return Task.FromResult(new UpgradeStepInitializeResult(UpgradeStepStatus.Complete, "ALl projects are already SDK style.", BuildBreakRisk.None));
                 }

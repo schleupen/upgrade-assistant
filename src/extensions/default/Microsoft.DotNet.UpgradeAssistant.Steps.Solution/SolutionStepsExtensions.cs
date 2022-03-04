@@ -21,6 +21,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
 
             services.Services.AddUpgradeStep<CurrentProjectSelectionStep>();
             services.Services.AddUpgradeStep<NextProjectStep>();
+            services.Services.AddUpgradeStep<CleanEncodingInBuildFilesStep>();
             services.Services.AddUpgradeStep<FinalizeSolutionStep>();
             services.Services.AddUpgradeStep<EntrypointSelectionStep>();
 

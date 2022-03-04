@@ -172,6 +172,8 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Solution
                 return false;
             }
 
+            return true;
+
             var expectedTfm = await _tfmSelector.SelectTargetFrameworkAsync(project, token).ConfigureAwait(false);
 
             return project.TargetFrameworks.Any(tfm => _tfmComparer.IsCompatible(tfm, expectedTfm));

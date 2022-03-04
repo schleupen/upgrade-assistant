@@ -85,6 +85,14 @@ namespace Microsoft.DotNet.UpgradeAssistant.MSBuild
             }
         }
 
+        public static void AddPackageWithAliasReference(this ProjectRootElement projectRoot, ProjectItemGroupElement itemGroup, PackageWithAliasReference packageReference)
+        {
+            var newItemElement = projectRoot.CreateItemElement(MSBuildConstants.PackageReferenceType);
+            newItemElement.Update = packageReference.Name;
+            itemGroup.AppendChild(newItemElement);
+            newItemElement.AddMetadata("Aliases", packageReference.Alias);
+        }
+
         public static void RemoveReference(this ProjectRootElement projectRoot, Reference reference)
         {
             var element = projectRoot.GetAllReferences()

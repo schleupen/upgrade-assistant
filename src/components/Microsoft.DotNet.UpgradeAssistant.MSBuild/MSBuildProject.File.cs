@@ -61,6 +61,19 @@ namespace Microsoft.DotNet.UpgradeAssistant.MSBuild
             }
         }
 
+        public void AddPackagesWithAlias(IEnumerable<PackageWithAliasReference> references)
+        {
+            if (references.Any())
+            {
+                var packageReferenceItemGroup = ProjectRoot.GetOrCreateItemGroup(MSBuildConstants.PackageReferenceType);
+                foreach (var reference in references)
+                {
+                    _logger.LogInformation("Adding package reference: {PackageReference}", reference);
+                    ProjectRoot.AddPackageWithAliasReference(packageReferenceItemGroup, reference);
+                }
+            }
+        }
+
         public void RemovePackages(IEnumerable<NuGetReference> references)
         {
             foreach (var reference in NuGetReferences.PackageReferences)

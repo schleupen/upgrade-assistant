@@ -57,7 +57,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Extensions.TryConvert
             foreach (var item in msbuildWorkspace.WorkspaceItems)
             {
                 _logger.LogInformation("Converting project {Path} to SDK style", item.ProjectRootElement.FullPath);
-                var converter = new Converter(item.UnconfiguredProject, item.SdkBaselineProject, item.ProjectRootElement, noBackup: true, forceRemoveCustomImports: true);
+                var converter = new Converter(item.UnconfiguredProject, item.SdkBaselineProject, item.ProjectRootElement, noBackup: true, forceRemoveCustomImports: false);
                 converter.Convert(item.ProjectRootElement.FullPath);
             }
 
