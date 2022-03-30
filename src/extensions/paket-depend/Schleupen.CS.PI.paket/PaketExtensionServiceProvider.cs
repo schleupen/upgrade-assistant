@@ -20,7 +20,7 @@ namespace Schleupen.CS.PI.Paket
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.Services.AddUpgradeStep<PaketAliasFixStep>();
+            //services.Services.AddUpgradeStep<PaketAliasFixStep>();
             services.Services.AddUpgradeStep<GacFixStep>();
         }
     }
