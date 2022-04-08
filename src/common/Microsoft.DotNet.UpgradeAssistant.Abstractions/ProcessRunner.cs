@@ -30,6 +30,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
             {
                 StartInfo = new ProcessStartInfo(args.Command, args.Arguments)
                 {
+                    WorkingDirectory = args.WorkingDirectory,
                     CreateNoWindow = true,
                     UseShellExecute = false,
                     RedirectStandardOutput = true,

@@ -61,6 +61,11 @@ namespace Microsoft.DotNet.UpgradeAssistant.MSBuild
             }
         }
 
+        public void AddDefaultItemExcludes(string exclude)
+        {
+            ProjectRoot.AddDefaultItemExcludes(exclude);
+        }
+
         public void AddPackagesWithAlias(IEnumerable<PackageWithAliasReference> references)
         {
             if (references.Any())

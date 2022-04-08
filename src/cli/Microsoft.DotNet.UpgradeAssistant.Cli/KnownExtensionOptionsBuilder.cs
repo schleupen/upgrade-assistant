@@ -11,5 +11,8 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
         public bool SkipBackup { get; init; }
 
         public IReadOnlyCollection<string> Entrypoints { get; init; } = Array.Empty<string>();
+
+        public bool IsProjectRoot { get; init; }
+        public string PaketVersion { get; init; }
     }
 }

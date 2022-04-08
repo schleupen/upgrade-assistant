@@ -28,7 +28,9 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
                         services.AddKnownExtensionOptions(new()
                         {
                             SkipBackup = options.SkipBackup,
-                            Entrypoints = options.EntryPoint
+                            Entrypoints = options.EntryPoint,
+                            IsProjectRoot = options.IsProjectRoot,
+                            PaketVersion = options.PaketVersion
                         });
                     })
                     .RunUpgradeAssistantAsync(token));
@@ -36,11 +38,16 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
             AddOption(new Option<bool>(new[] { "--skip-backup" }, "Disables backing up the project. This is not recommended unless the project is in source control since this tool will make large changes to both the project and source files."));
             AddOption(new Option<bool>(new[] { "--non-interactive" }, "Automatically select each first option in non-interactive mode."));
             AddOption(new Option<int>(new[] { "--non-interactive-wait" }, "Wait the supplied seconds before moving on to the next option in non-interactive mode."));
+            AddOption(new Option<bool>(new[] { "--is-project-root" }, "Adds the Config Files (Directory.Build.props, NuGet.config)"));
+            AddOption(new Option<string>(new[] { "--paket-version" }, "sets the paket version to install"));
         }
 
         private class UpgradeOptions : CommandOptions, IUpgradeAssistantOptions
         {
             public bool SkipBackup { get; set; }
+
+            public bool IsProjectRoot { get; set; }
+            public string PaketVersion { get; set; }
 
             public bool NonInteractive { get; set; }
 

@@ -17,6 +17,8 @@ namespace Microsoft.DotNet.UpgradeAssistant
 
         IEnumerable<NuGetReference> PackageReferences { get; }
 
+        IEnumerable<Reference> References { get; }
+
         void AddFrameworkReferences(IEnumerable<Reference> frameworkReferences);
 
         void RemoveFrameworkReferences(IEnumerable<Reference> frameworkReferences);
@@ -24,6 +26,8 @@ namespace Microsoft.DotNet.UpgradeAssistant
         void AddPackages(IEnumerable<NuGetReference> packages);
 
         void AddPackagesWithAlias(IEnumerable<PackageWithAliasReference> references);
+
+        void AddDefaultItemExcludes(string exclude);
 
         void RemovePackages(IEnumerable<NuGetReference> packages);
 

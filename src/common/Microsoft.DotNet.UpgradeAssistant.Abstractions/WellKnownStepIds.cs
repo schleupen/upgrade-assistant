@@ -6,6 +6,9 @@ namespace Microsoft.DotNet.UpgradeAssistant
     public static class WellKnownStepIds
     {
         public const string BackupStepId = "Microsoft.DotNet.UpgradeAssistant.Steps.Backup.BackupStep";
+        public const string AddDefaultConfigFilesStepId = "Schleupen.Steps.paket.AddDefaultConfigFilesStep";
+        public const string AddPaketAsToolStepId = "Schleupen.Steps.paket.AddPaketAsToolStep";
+        public const string FixWorkflowProjectStepId = "Schleupen.Steps.paket.FixWorkflowProjectStep";
         public const string ConfigUpdaterStepId = "Microsoft.DotNet.UpgradeAssistant.Steps.Configuration.ConfigUpdaterStep";
         public const string PackageUpdaterPreTFMStepId = "Microsoft.DotNet.UpgradeAssistant.Steps.Packages.PackageUpdaterPreTFMStep";
         public const string PackageUpdaterStepId = "Microsoft.DotNet.UpgradeAssistant.Steps.Packages.PackageUpdaterStep";

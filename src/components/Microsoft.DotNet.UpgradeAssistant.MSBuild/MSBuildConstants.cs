@@ -11,6 +11,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.MSBuild
         public const string OutputTypePropertyName = "OutputType";
         public const string FrameworkReferenceType = "FrameworkReference";
         public const string PackageReferenceType = "PackageReference";
+        public const string DefaultItemExcludesType = "DefaultItemExcludes";
         public const string ReferenceType = "Reference";
         public const string VersionElementName = "Version";
 

@@ -85,6 +85,11 @@ namespace Microsoft.DotNet.UpgradeAssistant.MSBuild
             }
         }
 
+        public static void AddDefaultItemExcludes(this ProjectRootElement projectRoot, string exclude)
+        {
+            projectRoot.AddProperty(MSBuildConstants.DefaultItemExcludesType, exclude);
+        }
+
         public static void AddPackageWithAliasReference(this ProjectRootElement projectRoot, ProjectItemGroupElement itemGroup, PackageWithAliasReference packageReference)
         {
             var newItemElement = projectRoot.CreateItemElement(MSBuildConstants.PackageReferenceType);

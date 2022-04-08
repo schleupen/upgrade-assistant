@@ -42,7 +42,12 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
             services.AddExtensionOption(new
             {
                 Backup = new { Skip = options.SkipBackup },
-                Solution = new { Entrypoints = options.Entrypoints }
+                Solution = new { Entrypoints = options.Entrypoints },
+                Schleupen = new
+                {
+                    IsProjectRoot = options.IsProjectRoot,
+                    PaketVersion = options.PaketVersion
+                }
             });
         }
 

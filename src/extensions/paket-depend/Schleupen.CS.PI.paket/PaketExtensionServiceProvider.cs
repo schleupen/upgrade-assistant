@@ -22,6 +22,10 @@ namespace Schleupen.CS.PI.Paket
 
             //services.Services.AddUpgradeStep<PaketAliasFixStep>();
             services.Services.AddUpgradeStep<GacFixStep>();
+            services.Services.AddUpgradeStep<AddDefaultConfigFilesStep>();
+            services.Services.AddUpgradeStep<AddPaketAsToolStep>();
+            services.Services.AddUpgradeStep<FixWorkflowStep>();
+            services.AddExtensionOption<SchleupenOptions>("Schleupen");
         }
     }
 }
