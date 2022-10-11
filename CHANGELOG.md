@@ -3,11 +3,69 @@ All notable changes to the .NET Upgrade Assistant will be documented in this fil
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## Version
+
+## Version 0.4.346202 - 2022-09-20([Link](https://www.nuget.org/packages/upgrade-assistant/0.4.346202))
 
 ### Added
-- Added support for analysis report to be generated in HTML format
-(#966)[https://github.com/dotnet/upgrade-assistant/pull/966]
+- Generation of post upgrade report for UWP -> Windows App SDK migration (https://github.com/dotnet/upgrade-assistant/pull/1292)
+
+## Version 0.4.346201 - 2022-09-12 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.4.346201))
+
+### Added
+- WCF -> CoreWCF migration support (https://github.com/dotnet/upgrade-assistant/pull/1237)
+- Post-Upgrade report generation (https://github.com/dotnet/upgrade-assistant/pull/1260)
+
+### Fixed
+- MAUI bug fixes (https://github.com/dotnet/upgrade-assistant/pull/1238)
+- Binary Analysis `-p windows` error (https://github.com/dotnet/upgrade-assistant/pull/1266)
+- Improved the Analysis experience (https://github.com/dotnet/upgrade-assistant/pull/1291)
+
+## Version 0.4.336902 - 2022-07-19 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.4.336902))
+
+### Added
+- Binary Analysis support (https://github.com/dotnet/upgrade-assistant/pull/1210)
+
+### Changed
+- Format flag (`--format`) now available OOB for Analysis output
+
+### Fixed
+- `ConfigurationManager` error (#1151) (https://github.com/dotnet/upgrade-assistant/pull/1162)
+- Bug preventing extension Samples (and presumably any external extensions) from being properly loaded (https://github.com/dotnet/upgrade-assistant/pull/1204)
+- Doc updates around extension development, SARIF viewing
+
+## Version 0.3.330701 - 2022-06-08 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.330701))
+
+### Added
+- UWP conversion support to Windows App SDK (https://github.com/dotnet/upgrade-assistant/pull/1121)
+
+### Changed
+- Updated install command documentation to include nuget source feed URL (https://github.com/dotnet/upgrade-assistant/pull/1138)
+
+## Version 0.3.326103 - 2022-05-13 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.326103))
+
+### Fixed
+- Fix template file creation when directory does not exist(https://github.com/dotnet/upgrade-assistant/pull/1084)
+- Fix for community reported issues to make analysis messages more actionable (https://github.com/dotnet/upgrade-assistant/issues/1048) and (https://github.com/dotnet/upgrade-assistant/issues/1047) (PR - https://github.com/dotnet/upgrade-assistant/pull/1116)
+
+### Changed
+- Update WCF documentation to point to CoreWCF as well as gRPC(https://github.com/dotnet/upgrade-assistant/pull/1111)
+
+## Version 0.3.310801 - 2022-02-08 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.310801))
+### Added
+- Add solution wide project file conversion behind feature flag (https://github.com/dotnet/upgrade-assistant/pull/996)
+- Move transitive reference analyzer to step after other analyzers (https://github.com/dotnet/upgrade-assistant/pull/1001)
+- Add feature flag to enable running on non-Windows machines (https://github.com/dotnet/upgrade-assistant/pull/1022)
+- Add command to show feature flags and if they are enabled (https://github.com/dotnet/upgrade-assistant/pull/1004)
+- Add command 'analysis list-formats` to see available formats (https://github.com/dotnet/upgrade-assistant/pull/1029)
+- Read evaluated packagereference versions to support CPvM (https://github.com/dotnet/upgrade-assistant/pull/1035)
+
+### Fixed
+- Register default extensions first (https://github.com/dotnet/upgrade-assistant/issues/989) (PR - https://github.com/dotnet/upgrade-assistant/pull/1020) - Thanks for the PR @jbearfoot
+
+## Version 0.3.261602 - 2021-12-16 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.261602))
+
+### Added
+- Added support for analysis report to be generated in HTML format(https://github.com/dotnet/upgrade-assistant/pull/966)
 
 ## Version 0.3.256001 - 2021-11-17 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.256001))
 
@@ -15,24 +73,24 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Pushed extensions for loose assembly lookup and Maui (preview) conversions to NuGet.org
 
 ### Changed
-- Updated SARIF output for analyze to newer version (#927)[https://github.com/dotnet/upgrade-assistant/pull/927]
+- Updated SARIF output for analyze to newer version (https://github.com/dotnet/upgrade-assistant/pull/927)
 
 ## Version 0.3.255803 - 2021-11-09 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.255803))
 ### Added
-- In lieu of .NET 6 GA, Current, LTS and Preview now point to .NET 6 in upgrade-assistant (#907)[https://github.com/dotnet/upgrade-assistant/pull/907]
+- In lieu of .NET 6 GA, Current, LTS and Preview now point to .NET 6 in upgrade-assistant (https://github.com/dotnet/upgrade-assistant/pull/907)
 
 ### Fixed
 - Razor source updater bug fixes (#919)[https://github.com/dotnet/upgrade-assistant/pull/919]. Issues addressed
-  - (#856)[https://github.com/dotnet/upgrade-assistant/issues/856]
-  - (#914)[https://github.com/dotnet/upgrade-assistant/issues/914]
-  - (#915)[https://github.com/dotnet/upgrade-assistant/issues/915]
+  - (https://github.com/dotnet/upgrade-assistant/issues/856)
+  - (https://github.com/dotnet/upgrade-assistant/issues/914)
+  - (https://github.com/dotnet/upgrade-assistant/issues/915)
 
 ## Version 0.3.252501 - 2021-11-01 ([Link](https://www.nuget.org/packages/upgrade-assistant/0.3.252501))
 ### Added
 - Extensions can now be downloaded and installed into an upgrade context via a NuGet feed (see [docs](docs/design/Extension_Management.md) for details) (#873)[https://github.com/dotnet/upgrade-assistant/pull/855]
-- Added extension for identifying loose assemblies with data to identify loose assemblies from NuGet.org (see [docs](docs/design/Loose_binary_identification.md) for details) (#855)[https://github.com/dotnet/upgrade-assistant/pull/855]
-- Source updater for handling HighDpiMode setting in Winforms (#877)[https://github.com/dotnet/upgrade-assistant/pull/877]
-- More verbose logging for Diagnostic Analysis in Analyze Command (#877)[https://github.com/dotnet/upgrade-assistant/pull/877]
+- Added extension for identifying loose assemblies with data to identify loose assemblies from NuGet.org (see [docs](docs/design/Loose_binary_identification.md) for details) (https://github.com/dotnet/upgrade-assistant/pull/855)
+- Source updater for handling HighDpiMode setting in Winforms (https://github.com/dotnet/upgrade-assistant/pull/877)
+- More verbose logging for Diagnostic Analysis in Analyze Command (https://github.com/dotnet/upgrade-assistant/pull/877)
 
 ### Removed
 - Removed option to run `try-convert` as an exe and now will always be run in-process [#870](https://github.com/dotnet/upgrade-assistant/pull/870)

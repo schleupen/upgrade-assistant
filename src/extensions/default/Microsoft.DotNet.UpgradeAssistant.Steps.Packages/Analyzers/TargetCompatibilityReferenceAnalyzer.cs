@@ -55,8 +55,8 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Packages.Analyzers
                 else
                 {
                     // If the package won't work on the target Framework, check newer versions of the package
-                    var newerVersions = await _packageLoader.GetNewerVersionsAsync(packageReference, state.TargetFrameworks, new() { LatestMinorAndBuildOnly = true }, token).ConfigureAwait(false);
-                    var updatedReference = newerVersions.FirstOrDefault();
+                    var newerVersions = _packageLoader.GetNewerVersionsAsync(packageReference, state.TargetFrameworks, new() { LatestMinorAndBuildOnly = true }, token);
+                    var updatedReference = await newerVersions.FirstOrDefaultAsync().ConfigureAwait(false);
                     var details = new List<string>();
 
                     if (updatedReference == null)
@@ -65,26 +65,27 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Packages.Analyzers
                     }
                     else
                     {
-                        _logger.LogInformation("Marking package {NuGetPackage} for removal because it doesn't support the target framework but a newer version ({Version}) does", packageReference, updatedReference.Version);
+                        var logMessage = SR.Format("Package {0} does not support the target(s) {1} but a newer version ({2}) does.", packageReference, string.Join(", ", state.TargetFrameworks), updatedReference.Version);
+                        _logger.LogInformation(logMessage);
                         var isMajorChange = _comparer.IsMajorChange(updatedReference.Version, packageReference.Version);
 
                         if (isMajorChange)
                         {
-                            var logString = SR.Format("Package {0} needs to be upgraded across major versions ({1} -> {2}) which may introduce breaking changes", packageReference.Name, packageReference.Version, updatedReference.Version);
-                            details.Add(logString);
+                            var logString = SR.Format("Package {0} needs to be upgraded across major versions ({1} -> {2}) which may introduce breaking changes.", packageReference.Name, packageReference.Version, updatedReference.Version);
+                            details.Add($"{logMessage}  {logString}");
                             _logger.LogWarning(logString);
                         }
 
                         if (updatedReference.IsPrerelease)
                         {
                             var logString = SR.Format("Package {0} needs to be upgraded to a prerelease version ({1}) because no released version supports target(s) {2}", packageReference.Name, updatedReference.Version, string.Join(", ", state.TargetFrameworks));
-                            details.Add(logString);
+                            details.Add($"{logMessage}  {logString}");
                             _logger.LogWarning(logString);
                         }
 
                         if (!isMajorChange && !updatedReference.IsPrerelease)
                         {
-                            details.Add(SR.Format("Package {0} needs to be upgraded from {1} to {2}.", packageReference.Name, packageReference.Version, updatedReference.Version));
+                            details.Add($"{logMessage}  {SR.Format("Package {0} needs to be upgraded from {1} to {2}.", packageReference.Name, packageReference.Version, updatedReference.Version)}");
                         }
 
                         state.Packages.Remove(packageReference, new OperationDetails() { Risk = BuildBreakRisk.None, Details = details });

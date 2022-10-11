@@ -21,8 +21,9 @@
       - Newtonsoft.Json versions 9.0.1 and 12.0.2 are built by source-build
       - Version 12.0.2 is written to Version.props
       - Arcade needs to use 9.0.1 so we need to override Version.props value here
+      - Security vuln flagged 6/23/2022 for <13.0.1
     -->
-    <NewtonsoftJsonVersion>9.0.1</NewtonsoftJsonVersion>
+    <NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(DotNetBuildOffline)' == 'true'">
@@ -44,7 +45,7 @@
     <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory)\rules.ruleset</CodeAnalysisRuleSet>
 
     <!-- Ignore CA2254 The logging message template should not vary between calls. EditorConfig doesn't seem to honored for this -->
-    <NoWarn>$(NoWarn);CA2254</NoWarn>
+    <NoWarn>$(NoWarn);CA2254;NU1701</NoWarn>
   </PropertyGroup>
 
   <!-- Treat warnings as errors in release builds, so that all warnings

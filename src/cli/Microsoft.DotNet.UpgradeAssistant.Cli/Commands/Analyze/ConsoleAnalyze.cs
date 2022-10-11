@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Microsoft.DotNet.UpgradeAssistant.Analysis;
 using Microsoft.DotNet.UpgradeAssistant.Extensions;
 using Microsoft.Extensions.Logging;
@@ -20,8 +21,8 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
         private readonly IUpgradeStateManager _stateManager;
         private readonly IEnumerable<IAnalyzeResultProvider> _providers;
         private readonly IExtensionProvider _extensionProvider;
-        private readonly IOptions<AnalysisOptions> _options;
-        private readonly IAnalyzeResultWriterProvider _writerProvider;
+        private readonly IOptions<OutputOptions> _options;
+        private readonly IOutputResultWriterProvider _writerProvider;
         private readonly ILogger<ConsoleAnalyze> _logger;
 
         public ConsoleAnalyze(
@@ -29,8 +30,8 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
             IUpgradeContextFactory contextFactory,
             IUpgradeStateManager stateManager,
             IExtensionProvider extensionProvider,
-            IOptions<AnalysisOptions> options,
-            IAnalyzeResultWriterProvider writerProvider,
+            IOptions<OutputOptions> options,
+            IOutputResultWriterProvider writerProvider,
             ILogger<ConsoleAnalyze> logger)
         {
             _providers = analysisProviders ?? throw new ArgumentNullException(nameof(analysisProviders));
@@ -48,7 +49,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
 
             await _stateManager.LoadStateAsync(context, token);
             var analzyerContext = new AnalyzeContext(context);
-            var analyzeResultMap = new List<AnalyzeResultDefinition>();
+            var analyzeResultMap = new List<OutputResultDefinition>();
 
             await foreach (var provider in _providers.ToAsyncEnumerable().WhereAwait(async i => await i.IsApplicableAsync(analzyerContext, token)))
             {
@@ -57,7 +58,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
                     Version = GetProviderVersion(provider),
                     Name = provider.Name,
                     InformationUri = provider.InformationUri,
-                    AnalysisResults = provider.AnalyzeAsync(analzyerContext, token),
+                    Results = provider.AnalyzeAsync(analzyerContext, token),
                 });
             }
 
@@ -65,14 +66,16 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
             {
                 var output = Path.Combine(Directory.GetCurrentDirectory(), $"AnalysisReport.{_options.Value.Format}");
 
-                _logger.LogInformation("Writing output to {File}", output);
+                _logger.LogInformation(LocalizedStrings.WritingOutputMessage, output);
 
-                using var stream = File.OpenWrite(output);
+                using var stream = File.Create(output);
                 await writer.WriteAsync(analyzeResultMap.ToAsyncEnumerable(), stream, token).ConfigureAwait(false);
+
+                _logger.LogInformation(LocalizedStrings.AnalysisCompleteMessage, output);
             }
             else
             {
-                _logger.LogError("Requested format '{Format}' is unavailable", _options.Value.Format);
+                _logger.LogError(LocalizedStrings.RequestedFormatUnavailableMessage, _options.Value.Format);
             }
         }
 

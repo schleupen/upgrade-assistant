@@ -14,16 +14,34 @@ variables:
     - group: UpgradeAssistant_SDL_Settings
   - name: DownloadLooseAssemblyIndex
     value: true
+  - name: net5ver
+    value: 5.0.x
+  - name: net6ver
+    value: 6.0.x
 
 trigger:
   batch: true
   branches:
     include:
       - main
+  paths:
+    exclude:
+      - '*.md'
+      - '**/*.md'
+      - docs
+      - .vscode
+      - '.github/**'
 pr:
   branches:
     include:
     - '*'
+  paths:
+    exclude:
+      - '*.md'
+      - '**/*.md'
+      - docs
+      - .vscode
+      - '.github/**'
 
 stages:
 - stage: build
@@ -41,13 +59,13 @@ stages:
       - job: Windows_NT
         pool:
           ${{ if or(eq(variables['System.TeamProject'], 'public'), in(variables['Build.Reason'], 'PullRequest')) }}:
-            name: NetCore1ESPool-Public
-            demands: ImageOverride -equals build.windows.10.amd64.vs2019.pre.open
+            name: NetCore-Public
+            demands: ImageOverride -equals build.windows.amd64.vs2022.pre.open
           ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
             name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals build.windows.10.amd64.vs2019
+            demands: ImageOverride -equals build.windows.amd64.vs2022.pre
         variables:
-        # Enable signing for internal, non-PR builds
+        # Enable signing and publishing for internal, non-PR builds
         - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
           - group: DotNet-Blob-Feed
           - group: DotNet-Symbol-Server-Pats
@@ -56,7 +74,9 @@ stages:
           - name: _DotNetPublishToBlobFeed
             value: true
           - name: _BuildArgs
-            value: /p:SignType=$(_SignType)
+            value: >
+              -publish
+              /p:SignType=$(_SignType)
               /p:DotNetSignType=$(_SignType)
               /p:TeamName=$(_TeamName)
               /p:DotNetPublishUsingPipelines=$(_PublishUsingPipelines)
@@ -80,10 +100,16 @@ stages:
           clean: true
           submodules: true
         - task: UseDotNet@2
-          displayName: 'Use .NET Core sdk'
+          displayName: Use .NET Core $(net5ver)
           inputs:
             packageType: sdk
-            version: 5.0.400
+            version: $(net5ver)
+            installationPath: $(Build.SourcesDirectory)/.dotnet
+        - task: UseDotNet@2
+          displayName: Use .NET Core $(net6ver)
+          inputs:
+            packageType: sdk
+            version: $(net6ver)
             installationPath: $(Build.SourcesDirectory)/.dotnet
         - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:
           - task: PowerShell@2
@@ -94,11 +120,12 @@ stages:
               arguments: -ConfigFile $(Build.SourcesDirectory)/NuGet.config -Password $Env:Token
             env:
               Token: $(dn-bot-dnceng-artifact-feeds-rw)
-        - script: eng\common\cibuild.cmd
-            /p:MSBuildEnableWorkloadResolver=$(MSBuildEnableWorkloadResolver)
+        - script: build.bat
+            -test -sign
             -configuration $(_BuildConfig) 
-            -prepareMachine
+            -prepareMachine -ci
             $(_BuildArgs)
+            /p:MSBuildEnableWorkloadResolver=$(MSBuildEnableWorkloadResolver)
           displayName: Windows Build / Publish
 
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest')) }}:

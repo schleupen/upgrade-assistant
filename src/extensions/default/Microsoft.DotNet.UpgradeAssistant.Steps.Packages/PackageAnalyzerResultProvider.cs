@@ -45,7 +45,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Packages
             return await Task.FromResult(true).ConfigureAwait(false);
         }
 
-        public async IAsyncEnumerable<AnalyzeResult> AnalyzeAsync(AnalyzeContext analysis, [EnumeratorCancellation] CancellationToken token)
+        public async IAsyncEnumerable<OutputResult> AnalyzeAsync(AnalyzeContext analysis, [EnumeratorCancellation] CancellationToken token)
         {
             if (analysis is null)
             {
@@ -85,9 +85,9 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Packages
             }
         }
 
-        private HashSet<AnalyzeResult> ExtractAnalysisResult(string fileLocation, IDependencyAnalysisState? analysisState)
+        private HashSet<OutputResult> ExtractAnalysisResult(string fileLocation, IDependencyAnalysisState? analysisState)
         {
-            var results = new HashSet<AnalyzeResult>();
+            var results = new HashSet<OutputResult>();
 
             if (analysisState is null || !analysisState.AreChangesRecommended)
             {
@@ -150,30 +150,17 @@ namespace Microsoft.DotNet.UpgradeAssistant.Steps.Packages
                     {
                         foreach (var s in collection)
                         {
-                            if (s.OperationDetails is not null && s.OperationDetails.Details is not null && s.OperationDetails.Details.Any())
+                            var resultMessage = (s.OperationDetails?.Details?.Any() == true && !results.Select(i => i.FileLocation == fileLocation & i.ResultMessage == s.OperationDetails.Details.FirstOrDefault()).Any()) ? s.OperationDetails.Details.FirstOrDefault() : string.Concat(name, s.Item, action);
+
+                            results.Add(new()
                             {
-                                results.UnionWith(s.OperationDetails.Details.Select(s => new AnalyzeResult()
-                                {
-                                    RuleId = ruleId,
-                                    RuleName = ruleName,
-                                    FullDescription = fullDescription,
-                                    HelpUri = _helpUri,
-                                    FileLocation = fileLocation,
-                                    ResultMessage = s,
-                                }));
-                            }
-                            else
-                            {
-                                results.Add(new()
-                                {
-                                    RuleId = ruleId,
-                                    RuleName = ruleName,
-                                    FullDescription = fullDescription,
-                                    HelpUri = _helpUri,
-                                    FileLocation = fileLocation,
-                                    ResultMessage = string.Concat(name, s.Item, action),
-                                });
-                            }
+                                RuleId = ruleId,
+                                RuleName = ruleName,
+                                FullDescription = fullDescription,
+                                HelpUri = _helpUri,
+                                FileLocation = fileLocation,
+                                ResultMessage = resultMessage,
+                            });
                         }
                     }
                 }
