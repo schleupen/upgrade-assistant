@@ -1,3 +1,3 @@
 [submodule "modules/try-convert"]
 	path = modules/try-convert
-	url = https://tfsprod/tfs/DefaultCollection/CS3/_git/try-convert
+url=ssh://tfsprod:22/tfs/DefaultCollection/CS3/_git/try-convert
