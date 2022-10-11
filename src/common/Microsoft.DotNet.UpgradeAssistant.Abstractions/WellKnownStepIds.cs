@@ -24,5 +24,7 @@ namespace Microsoft.DotNet.UpgradeAssistant
         public const string VisualBasicProjectUpdaterStepId = "Microsoft.DotNet.UpgradeAssistant.Extensions.VisualBasic.VisualBasicProjectUpdaterStep";
         public const string WinformsProjectUpdaterStepId = "Microsoft.DotNet.UpgradeAssistant.Extensions.Windows.WinformsUpdateStep";
         public const string CleanEncodingInBuildFilesStepId = "Schleupen.CS.PI.CleanEncodingBuildFilesStep";
+        public const string WindowsDesktopUpdateStepId = "Microsoft.DotNet.UpgradeAssistant.Extensions.Windows.WindowsDesktopUpdateStep";
+        public const string WCFUpdateStepId = "Microsoft.DotNet.UpgradeAssistant.Extensions.WCFUpdater.WCFUpdateStep";
     }
 }

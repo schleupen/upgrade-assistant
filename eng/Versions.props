@@ -3,7 +3,7 @@
   <PropertyGroup>
     <!-- This repo version -->
     <MajorVersion>0</MajorVersion>
-    <MinorVersion>3</MinorVersion>
+    <MinorVersion>4</MinorVersion>
     <PatchVersion>100</PatchVersion>
     <!-- Build release-only package. -->
     <PreReleaseVersionLabel>Beta</PreReleaseVersionLabel>
@@ -29,7 +29,7 @@
     <MicrosoftBuildTasksCoreVersion>15.7.179</MicrosoftBuildTasksCoreVersion>
     <MicrosoftBuildUtilitiesCoreVersion>15.7.179</MicrosoftBuildUtilitiesCoreVersion>
     <MicrosoftCodeAnalysisAnalyzersVersion>2.6.3</MicrosoftCodeAnalysisAnalyzersVersion>
-    <MicrosoftCodeAnalysisCSharpVersion>2.9.0</MicrosoftCodeAnalysisCSharpVersion>
+    <MicrosoftCodeAnalysisCSharpVersion>3.8.0</MicrosoftCodeAnalysisCSharpVersion>
     <MsbuildTaskMicrosoftCodeAnalysisCSharpVersion>3.4.0</MsbuildTaskMicrosoftCodeAnalysisCSharpVersion>
     <MicrosoftIdentityModelClientsActiveDirectoryVersion>3.17.2</MicrosoftIdentityModelClientsActiveDirectoryVersion>
     <MicrosoftRestClientRuntimeVersion>2.3.13</MicrosoftRestClientRuntimeVersion>
@@ -44,7 +44,6 @@
     <MoqVersion>4.8.3</MoqVersion>
     <MonoOptionsVersion>5.3.0.1</MonoOptionsVersion>
     <McMasterExtensionsCommandLineUtils>2.3.0</McMasterExtensionsCommandLineUtils>
-    <NewtonsoftJsonVersion>9.0.1</NewtonsoftJsonVersion>
     <SystemTextJsonVersion>4.7.0</SystemTextJsonVersion>
     <NuGetVersioningVersion>4.4.0</NuGetVersioningVersion>
     <NuGetVersion>5.6.0-preview.2.6489</NuGetVersion>
@@ -69,8 +68,8 @@
     <XUnitVersion>2.4.1</XUnitVersion>
     <XUnitAbstractionsVersion>2.0.3</XUnitAbstractionsVersion>
     <XUnitVSRunnerVersion>2.4.1</XUnitVSRunnerVersion>
-    <MicrosoftDotNetBuildTasksFeedVersion>7.0.0-beta.22124.4</MicrosoftDotNetBuildTasksFeedVersion>
-    <MicrosoftDotNetSignToolVersion>7.0.0-beta.22124.4</MicrosoftDotNetSignToolVersion>
+    <MicrosoftDotNetBuildTasksFeedVersion>8.0.0-beta.22503.1</MicrosoftDotNetBuildTasksFeedVersion>
+    <MicrosoftDotNetSignToolVersion>8.0.0-beta.22503.1</MicrosoftDotNetSignToolVersion>
     <MicrosoftAzureDocumentDBVersion>1.22.0</MicrosoftAzureDocumentDBVersion>
     <MicrosoftAzureCosmosDBTableVersion>1.1.2</MicrosoftAzureCosmosDBTableVersion>
     <MicrosoftAspNetCoreAllVersion>2.0.0</MicrosoftAspNetCoreAllVersion>
@@ -83,7 +82,7 @@
     <MicrosoftDotNetMaestroClientVersion>1.1.0-beta.20258.6</MicrosoftDotNetMaestroClientVersion>
     <MicrosoftSourceLinkGitHubVersion>1.1.0-beta-21101-02</MicrosoftSourceLinkGitHubVersion>
     <MicrosoftSourceLinkAzureReposGitVersion>1.1.0-beta-21101-02</MicrosoftSourceLinkAzureReposGitVersion>
-    <MicrosoftDotNetSwaggerGeneratorMSBuildVersion>7.0.0-beta.22124.4</MicrosoftDotNetSwaggerGeneratorMSBuildVersion>
+    <MicrosoftDotNetSwaggerGeneratorMSBuildVersion>8.0.0-beta.22503.1</MicrosoftDotNetSwaggerGeneratorMSBuildVersion>
     <MicrosoftDotNetXliffTasksVersion>1.0.0-beta.21376.1</MicrosoftDotNetXliffTasksVersion>
     <MicrosoftDotNetMaestroTasksVersion>1.1.0-beta.21117.3</MicrosoftDotNetMaestroTasksVersion>
     <MicrosoftDotNetXHarnessCLIVersion>1.0.0-prerelease.21103.1</MicrosoftDotNetXHarnessCLIVersion>
@@ -92,7 +91,7 @@
     <MicrosoftBuildLocatorVersion>1.4.1</MicrosoftBuildLocatorVersion>
     <MicrosoftBuildVersion>16.7</MicrosoftBuildVersion>
     <MicrosoftWin32RegistryVersion>5.0.0-rc.1.20451.14</MicrosoftWin32RegistryVersion>
-    <NewtonsoftJsonVersion>12.0.3</NewtonsoftJsonVersion>
+    <NewtonsoftJsonVersion>13.0.1</NewtonsoftJsonVersion>
     <NuGetVersioningVersion>5.8.0-preview.3.6823</NuGetVersioningVersion>
     <SystemCollectionsImmutableVersion>5.0.0-rc.1.20451.14</SystemCollectionsImmutableVersion>
     <SystemCommandLineVersion>2.0.0-beta1.20371.2</SystemCommandLineVersion>

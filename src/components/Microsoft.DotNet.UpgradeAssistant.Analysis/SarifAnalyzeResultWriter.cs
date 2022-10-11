@@ -3,27 +3,30 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.Sarif;
+using Newtonsoft.Json;
 
 namespace Microsoft.DotNet.UpgradeAssistant.Analysis
 {
-    public class SarifAnalyzeResultWriter : IAnalyzeResultWriter
+    public class SarifAnalyzeResultWriter : IOutputResultWriter
     {
-        private readonly ISerializer _serializer;
-
-        public string Format => "sarif";
-
-        public SarifAnalyzeResultWriter(ISerializer serializer)
+        private readonly JsonSerializer _serializer = JsonSerializer.Create(new()
         {
-            this._serializer = serializer;
-        }
+            Formatting = Formatting.Indented,
+            Culture = CultureInfo.InvariantCulture,
+            TypeNameHandling = TypeNameHandling.None,
+            NullValueHandling = NullValueHandling.Ignore,
+        });
 
-        public async Task WriteAsync(IAsyncEnumerable<AnalyzeResultDefinition> results, Stream stream, CancellationToken token)
+        public string Format => WellKnownFormats.Sarif;
+
+        public async Task WriteAsync(IAsyncEnumerable<OutputResultDefinition> results, Stream stream, CancellationToken token)
         {
             if (results is null)
             {
@@ -41,15 +44,16 @@ namespace Microsoft.DotNet.UpgradeAssistant.Analysis
             };
 
             using var writer = new StreamWriter(stream, Encoding.UTF8, 1024, leaveOpen: true);
+            using var jsonWriter = new JsonTextWriter(writer);
 
-            _serializer.Write(writer, sarifLog);
+            _serializer.Serialize(jsonWriter, sarifLog, typeof(SarifLog));
         }
 
-        private static async IAsyncEnumerable<Run> ExtractRunsAsync(IAsyncEnumerable<AnalyzeResultDefinition> analyzeResultDefinitions)
+        private static async IAsyncEnumerable<Run> ExtractRunsAsync(IAsyncEnumerable<OutputResultDefinition> analyzeResultDefinitions)
         {
             await foreach (var ar in analyzeResultDefinitions)
             {
-                var analyzeResults = await ar.AnalysisResults.ToListAsync().ConfigureAwait(false);
+                var analyzeResults = await ar.Results.ToListAsync().ConfigureAwait(false);
                 yield return new()
                 {
                     Tool = new()
@@ -67,7 +71,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Analysis
             }
         }
 
-        private static ReportingDescriptor ExtractRule(IGrouping<string, AnalyzeResult> analyzeResults)
+        private static ReportingDescriptor ExtractRule(IGrouping<string, OutputResult> analyzeResults)
         {
             var analyzeResult = analyzeResults.First();
 
@@ -83,7 +87,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Analysis
             };
 
             // TODO: once we update all the other types of rules, we will be able to remove this condition.
-            if (!string.IsNullOrWhiteSpace(analyzeResult.FullDescription))
+            if (!string.IsNullOrWhiteSpace(analyzeResult.RuleName))
             {
                 rule.Name = analyzeResult.RuleName;
             }
@@ -91,7 +95,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Analysis
             return rule;
         }
 
-        private static IList<Result> ExtractResults(IList<AnalyzeResult> analyzeResults)
+        private static IList<Result> ExtractResults(IList<OutputResult> analyzeResults)
         {
             var results = new List<Result>();
             foreach (var r in analyzeResults)

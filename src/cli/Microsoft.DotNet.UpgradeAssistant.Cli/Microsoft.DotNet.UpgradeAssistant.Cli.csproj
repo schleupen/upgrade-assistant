@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
@@ -12,6 +12,7 @@
     <PackageIcon>icon.png</PackageIcon>
     <IsExtensionHost>true</IsExtensionHost>
     <ExtensionsDirectory>..\..\extensions\</ExtensionsDirectory>
+    <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="appsettings.Development.json">
@@ -46,7 +47,7 @@
       <Version>5.0.0</Version>
     </PackageReference>
     <PackageReference Include="System.CommandLine">
-      <Version>2.0.0-beta1.21216.1</Version>
+      <Version>2.0.0-beta4.22272.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -87,6 +88,8 @@
     <PackageReference Include="NuGet.Versioning" ExcludeAssets="runtime">
       <Version>5.8.0</Version>
     </PackageReference>
+    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\common\Microsoft.DotNet.UpgradeAssistant.Abstractions\Microsoft.DotNet.UpgradeAssistant.Abstractions.csproj" />
@@ -114,6 +117,15 @@
     </Extension>
     <Extension Include="$(ExtensionsDirectory)try-convert\Microsoft.DotNet.UpgradeAssistant.Extensions.TryConvert\Microsoft.DotNet.UpgradeAssistant.Extensions.TryConvert.csproj">
       <Name>try-convert</Name>
+    </Extension>
+    <Extension Include="$(ExtensionsDirectory)maui\Microsoft.DotNet.UpgradeAssistant.Extensions.Maui\Microsoft.DotNet.UpgradeAssistant.Extensions.Maui.csproj">
+      <Name>maui</Name>
+    </Extension>
+    <Extension Include="$(ExtensionsDirectory)binaryanalysis\Microsoft.DotNet.UpgradeAssistant.Extensions.BinaryAnalysis\Microsoft.DotNet.UpgradeAssistant.Extensions.BinaryAnalysis.csproj">
+      <Name>binaryanalysis</Name>
+    </Extension>
+    <Extension Include="$(ExtensionsDirectory)wcf\Microsoft.DotNet.UpgradeAssistant.Extensions.WCFUpdater\Microsoft.DotNet.UpgradeAssistant.Extensions.WCFUpdater.csproj">
+      <Name>wcf</Name>
     </Extension>
     <Extension Include="$(ExtensionsDirectory)paket-depend\Schleupen.CS.PI.paket\Schleupen.CS.PI.paket.csproj">
       <Name>paket-depend</Name>
