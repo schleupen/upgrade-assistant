@@ -58,6 +58,13 @@ namespace MSBuild.Abstractions
         public void RemoveChild(ProjectElement child) => _rootElement.RemoveChild(child);
 
         public void Save(string path) => _rootElement.Save(path);
+        
+        public ProjectTargetElement AddTargetElement(string name)
+        {
+            var target = _rootElement.AddTarget(name);
+            
+            return target;
+        }
     }
 
     public interface IProjectRootElement
@@ -91,6 +98,8 @@ namespace MSBuild.Abstractions
         ProjectPropertyElement CreatePropertyElement(string propertyName);
 
         ProjectPropertyGroupElement AddPropertyGroup();
+        
+        ProjectTargetElement AddTargetElement(string name);
 
         ProjectItemGroupElement AddItemGroup();
 

@@ -21,15 +21,20 @@ namespace MSBuild.Conversion.Project
             {
                 if (!forceRemoveCustomImports)
                 {
-                    var fileName = Path.GetFileName(import.Project);
-                    if (MSBuildFacts.PropsToRemove.Contains(fileName, StringComparer.OrdinalIgnoreCase) ||
-                        MSBuildFacts.TargetsToRemove.Contains(fileName, StringComparer.OrdinalIgnoreCase))
-                    {
-                        projectRootElement.RemoveChild(import);
-                    }
-                    else if (!MSBuildFacts.ImportsToKeep.Contains(fileName, StringComparer.OrdinalIgnoreCase))
+                    var projectPath = new FileInfo(projectRootElement.FullPath);
+                    var localImportPath = new FileInfo(Path.Combine(projectPath.DirectoryName, import.Project));
+                    var fileName = Path.GetFileName(import.Project);                
+                    if (MSBuildFacts.ImportsToKeep.Contains(fileName, StringComparer.OrdinalIgnoreCase) ||
+                        (
+                            localImportPath.Exists && 
+                            !localImportPath.FullName.Contains("\\packages\\") && 
+                            !MSBuildFacts.ImportsToRemove.Contains(fileName, StringComparer.OrdinalIgnoreCase)))
                     {
                         Console.WriteLine($"This project has an unrecognized custom import which may need reviewed after conversion: {fileName}");
+                    }
+                    else
+                    {
+                        projectRootElement.RemoveChild(import);
                     }
                 }
                 else
@@ -46,7 +51,8 @@ namespace MSBuild.Conversion.Project
             {
                 // Libraries targeting .NET Framework can use the default SDK and still be used by NetFx callers.
                 // However, web apps (as opposed to libraries) or libraries that are targeting .NET Core/.NET should use the web SDK.
-                projectRootElement.Sdk = WebFacts.WebSDKAttribute;
+                projectRootElement.Sdk = MSBuildFacts.DefaultSDKAttribute; //  WebFacts.WebSDKAttribute;
+
             }
             else
             {
@@ -127,6 +133,42 @@ namespace MSBuild.Conversion.Project
                 {
                     projectRootElement.RemoveChild(propGroup);
                 }
+            }
+
+            return projectRootElement;
+        }
+
+        public static IProjectRootElement RemoveBaseIntermediateOutputPath(this IProjectRootElement projectRootElement)
+        {
+            foreach (var propGroup in projectRootElement.PropertyGroups)
+            {
+                foreach (var prop in propGroup.Properties)
+                {
+                    if (prop.Name.Equals("BaseIntermediateOutputPath"))
+                    {
+                        propGroup.RemoveChild(prop);
+                    }
+                }
+
+                if (propGroup.Properties.Count == 0)
+                {
+                    projectRootElement.RemoveChild(propGroup);
+                }
+            }
+
+            return projectRootElement;
+        }
+
+        public static IProjectRootElement RemoveAppendTargetFrameworkToOutputPathProperty(this IProjectRootElement projectRootElement, BaselineProject baselineProject)
+        {
+            var propGroup = MSBuildHelpers.GetOrCreateTopLevelPropertyGroup(baselineProject, projectRootElement);
+
+            var property =
+                propGroup.Properties.FirstOrDefault(p => p.Name.Equals(MSBuildFacts.AppendTargetFrameworkToOutputPath));
+
+            if (property != null)
+            {
+                propGroup.RemoveChild(property);
             }
 
             return projectRootElement;
@@ -354,6 +396,51 @@ namespace MSBuild.Conversion.Project
                 }
             }
 
+            return projectRootElement;
+        }
+
+        public static IProjectRootElement RewriteBuildEvents(this IProjectRootElement projectRootElement)
+        {
+            var pg = projectRootElement.PropertyGroups.FirstOrDefault(pg => pg.Properties.Any(ProjectPropertyHelpers.IsPostBuildEventProperty));
+            var postBuildEvent = pg?.Properties.FirstOrDefault(x => ProjectPropertyHelpers.IsPostBuildEventProperty(x));
+            if (postBuildEvent != null)
+            {
+                if(!string.IsNullOrWhiteSpace(postBuildEvent.Value))
+                {
+                    var target = projectRootElement.AddTargetElement("PostBuild");
+                    target.AfterTargets = "PostBuildEvent";
+                    var task = target.AddTask("Exec");
+                    task.SetParameter("Command", postBuildEvent.Value);
+                }
+
+                pg.RemoveChild(postBuildEvent);
+
+                if (pg.Children.Count == 0)
+                {
+                    projectRootElement.RemoveChild(pg);
+                }
+            }
+
+            pg = projectRootElement.PropertyGroups.FirstOrDefault(pg => pg.Properties.Any(ProjectPropertyHelpers.IsPreBuildEventProperty));
+            var preBuildEvent = pg?.Properties.FirstOrDefault(x => ProjectPropertyHelpers.IsPreBuildEventProperty(x));
+
+            if (preBuildEvent != null)
+            {
+                if (!string.IsNullOrWhiteSpace(preBuildEvent.Value))
+                {
+                    var target = projectRootElement.AddTargetElement("PreBuild");
+                    target.AfterTargets = "PreBuildEvent";
+                    var task = target.AddTask("Exec");
+                    task.SetParameter("Command", preBuildEvent.Value);
+                }
+
+                pg.RemoveChild(preBuildEvent);
+
+                if (pg.Children.Count == 0)
+                {
+                    projectRootElement.RemoveChild(pg);
+                }
+            }
             return projectRootElement;
         }
 

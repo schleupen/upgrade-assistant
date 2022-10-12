@@ -213,5 +213,19 @@ namespace MSBuild.Abstractions
         /// <returns>True if any property indicate a Xamarin IOS project, false otherwise.</returns>
         public static bool IsXamariniOSProjectTypeGuidsProperty(ProjectPropertyElement prop) =>
             IsProjectTypeGuidsNode(prop) && prop.Value.Split(';').Any(guidString => XamarinFacts.XamariniOSProjectTypeGuids.Contains(Guid.Parse(guidString)));
+
+        /// <summary>
+        /// Determines if a property is a PostBuildEvent.
+        /// </summary>
+        public static bool IsPostBuildEventProperty(ProjectPropertyElement prop) =>
+            prop.ElementName.Equals(MSBuildFacts.PostBuildEventNodeName, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Determines if a property is a PostBuildEvent.
+        /// </summary>
+        public static bool IsPreBuildEventProperty(ProjectPropertyElement prop) =>
+            prop.ElementName.Equals(MSBuildFacts.PreBuildEventNodeName, StringComparison.OrdinalIgnoreCase);
+
+
     }
 }

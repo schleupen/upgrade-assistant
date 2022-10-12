@@ -49,6 +49,8 @@ namespace MSBuild.Conversion.Project
                 .AddCsWinRTReferenceAndComponentProperty(_sdkBaselineProject)
                 .UpdateOutputTypeProperty(_sdkBaselineProject)
                 .RemoveDefaultedProperties(_sdkBaselineProject, _differs)
+                .RemoveBaseIntermediateOutputPath()
+                .RemoveAppendTargetFrameworkToOutputPathProperty(_sdkBaselineProject)
                 .RemoveUnnecessaryPropertiesNotInSDKByDefault(_sdkBaselineProject.ProjectStyle)
                 .AddTargetFrameworkProperty(_sdkBaselineProject, _sdkBaselineProject.TargetTFM)
                 .AddGenerateAssemblyInfoAsFalse(_sdkBaselineProject.ProjectStyle)
@@ -58,6 +60,7 @@ namespace MSBuild.Conversion.Project
                 .AddItemRemovesForIntroducedItems(_differs)
                 .RemoveUnnecessaryTargetsIfTheyExist()
                 .RemoveWebExtensions(_sdkBaselineProject.ProjectStyle)
+                .RewriteBuildEvents()
                 .ModifyProjectElement();
         }
 

@@ -40,6 +40,12 @@ namespace MSBuild.Conversion.Facts
         public static ImmutableArray<string> ImportsToKeep => ImmutableArray.Create(
             "Microsoft.TypeScript.Default.props",
             "Microsoft.TypeScript.targets");
+        /// <summary>
+        /// Props and targets files which are recognized and can be removed.
+        /// </summary>
+        public static ImmutableArray<string> ImportsToRemove => ImmutableArray.Create(
+            "paket.targets"
+        );
 
         /// <summary>
         /// Gets mapping of PCL profiles to netstandard versions.
@@ -147,10 +153,11 @@ namespace MSBuild.Conversion.Facts
             "packages.config",
 
             // Enterprise Services is no longer supported
-            "System.EnterpriseServices",
+            "System.EnterpriseServices"
 
             // System.Net.Http is a part of the .NET SDK now
-            "System.Net.Http");
+            //"System.Net.Http"
+        );
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1114:Parameter list should follow declaration", Justification = "Readability & clarity of the comment")]
         public static ImmutableArray<string> UnnecessaryWebIncludes => ImmutableArray.Create(
@@ -257,6 +264,8 @@ namespace MSBuild.Conversion.Facts
             LanguageProjectTypeVisualBasic, // VB.NET
             Guid.Parse("{F2A71F9B-5D33-465A-A702-920D77279786}")); // F#
 
+        public const string PostBuildEventNodeName = "PostBuildEvent";
+        public const string PreBuildEventNodeName = "PreBuildEvent";
         public const string DefaultSDKAttribute = "Microsoft.NET.Sdk";
         public const string LowestFrameworkVersionWithSystemValueTuple = "net47";
         public const string SharedProjectsImportLabel = "Shared";
@@ -274,6 +283,7 @@ namespace MSBuild.Conversion.Facts
         public const string DesignerSubType = "Designer";
         public const string CodeSubTypeValue = "Code";
         public const string TargetFrameworkNodeName = "TargetFramework";
+        public const string RootNamespace = "RootNamespace";
         public const string OutputTypeNodeName = "OutputType";
         public const string GenerateAssemblyInfoNodeName = "GenerateAssemblyInfo";
         public const string RequiredTargetFrameworkNodeName = "RequiredTargetFramework";
@@ -314,5 +324,6 @@ namespace MSBuild.Conversion.Facts
         public const string TargetPlatformVersionNodeName = "TargetPlatformVersion";
         public const string CsWinRTComponentName = "CsWinRTComponent";
         public static readonly (string Name, string Version) CsWinRTPackageReference = (Name: "Microsoft.Windows.CsWinRT", Version: "1.6.4");
+        public const string AppendTargetFrameworkToOutputPath = "AppendTargetFrameworkToOutputPath";
     }
 }
