@@ -50,7 +50,7 @@ namespace MSBuild.Conversion.Project
                 .UpdateOutputTypeProperty(_sdkBaselineProject)
                 .RemoveDefaultedProperties(_sdkBaselineProject, _differs)
                 .RemoveBaseIntermediateOutputPath()
-                .RemoveAppendTargetFrameworkToOutputPathProperty(_sdkBaselineProject)
+                .AddAppendTargetFrameworkToOutputPathProperty(_sdkBaselineProject)
                 .RemoveUnnecessaryPropertiesNotInSDKByDefault(_sdkBaselineProject.ProjectStyle)
                 .AddTargetFrameworkProperty(_sdkBaselineProject, _sdkBaselineProject.TargetTFM)
                 .AddGenerateAssemblyInfoAsFalse(_sdkBaselineProject.ProjectStyle)

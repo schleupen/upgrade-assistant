@@ -159,17 +159,17 @@ namespace MSBuild.Conversion.Project
             return projectRootElement;
         }
 
-        public static IProjectRootElement RemoveAppendTargetFrameworkToOutputPathProperty(this IProjectRootElement projectRootElement, BaselineProject baselineProject)
+        public static IProjectRootElement AddAppendTargetFrameworkToOutputPathProperty(this IProjectRootElement projectRootElement, BaselineProject baselineProject)
         {
             var propGroup = MSBuildHelpers.GetOrCreateTopLevelPropertyGroup(baselineProject, projectRootElement);
-
-            var property =
-                propGroup.Properties.FirstOrDefault(p => p.Name.Equals(MSBuildFacts.AppendTargetFrameworkToOutputPath));
-
-            if (property != null)
+            if (propGroup.Properties.Any(p => p.Name.Equals(MSBuildFacts.AppendTargetFrameworkToOutputPath)))
             {
-                propGroup.RemoveChild(property);
+                return projectRootElement;
             }
+
+            var appendTargetFrameworkToOutputPathElement = projectRootElement.CreatePropertyElement(MSBuildFacts.AppendTargetFrameworkToOutputPath);
+            appendTargetFrameworkToOutputPathElement.Value = "false";
+            propGroup.PrependChild(appendTargetFrameworkToOutputPathElement);
 
             return projectRootElement;
         }
