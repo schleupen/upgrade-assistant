@@ -39,8 +39,8 @@ namespace Schleupen.CS.PI.Paket
   </solution>
   <packageSources>
     <clear />
-    <add key=""nuget"" value=""http://nexus.schleupen-ag.de/repository/nuget/"" />
-    <add key=""schleupen"" value=""http://nexus.schleupen-ag.de/repository/SchleupenNugetPlatformDev/"" />
+    <add key=""nuget"" value=""https://nexus.schleupen-ag.de/repository/nuget/"" />
+    <add key=""schleupen"" value=""https://nexus.schleupen-ag.de/repository/SchleupenNugetPlatformDev/"" />
   </packageSources>
   <packageRestore>
      <add key=""enabled"" value=""False"" />
@@ -54,8 +54,8 @@ namespace Schleupen.CS.PI.Paket
   </solution>
   <packageSources>
     <clear />
-    <add key=""nuget"" value=""http://nexus.schleupen-ag.de/repository/nuget/"" />
-    <add key=""schleupen"" value=""http://nexus.schleupen-ag.de/repository/SchleupenNugetDev/"" />
+    <add key=""nuget"" value=""https://nexus.schleupen-ag.de/repository/nuget/"" />
+    <add key=""schleupen"" value=""https://nexus.schleupen-ag.de/repository/SchleupenNugetDev/"" />
   </packageSources>
   <packageRestore>
      <add key=""enabled"" value=""False"" />
