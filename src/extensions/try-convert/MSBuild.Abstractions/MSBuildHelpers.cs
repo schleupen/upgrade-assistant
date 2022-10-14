@@ -378,7 +378,8 @@ namespace MSBuild.Abstractions
             {
                 if (baselineProject.ProjectStyle == ProjectStyle.Default
                     || baselineProject.ProjectStyle == ProjectStyle.WindowsDesktop
-                    || baselineProject.ProjectStyle == ProjectStyle.DefaultSubset)
+                    || baselineProject.ProjectStyle == ProjectStyle.DefaultSubset
+                    || baselineProject.ProjectStyle == ProjectStyle.Web)
                 {
                     return true;
                 }

@@ -4,7 +4,7 @@
     <!-- This repo version -->
     <MajorVersion>0</MajorVersion>
     <MinorVersion>4</MinorVersion>
-    <PatchVersion>102</PatchVersion>
+    <PatchVersion>103</PatchVersion>
     <!-- Build release-only package. -->
     <PreReleaseVersionLabel>Beta</PreReleaseVersionLabel>
     <SkipPackagePublishingVersionChecks>true</SkipPackagePublishingVersionChecks>

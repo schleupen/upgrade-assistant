@@ -111,7 +111,7 @@ namespace MSBuild.Abstractions
                         // They aren't actually useful as an end result when converting web projects. When people conver to .NET Core they will just use the Web SDK attribute.
                         .Replace("<Import Project=\"$(VSToolsPath)\\WebApplications\\Microsoft.WebApplication.targets\" Condition=\"'$(VSToolsPath)' != ''\" />", string.Empty)
                         .Replace("<Import Project=\"$(MSBuildExtensionsPath32)\\Microsoft\\VisualStudio\\v10.0\\WebApplications\\Microsoft.WebApplication.targets\" Condition=\"false\" />", string.Empty)
-                        .Replace("$(ProjectDir)", "$(MSBuildProjectDirectory)")
+                        .Replace("$(ProjectDir)", "$(MSBuildProjectDirectory)\\")
 
                         // Legacy F# projects specify this import. It's not loadable by the .NET SDK MSBuild, and .NET Core-based F# projects don't use it. So we just remove it.
                         .Replace("<Import Project=\"$(FSharpTargetsPath)\" />", string.Empty);

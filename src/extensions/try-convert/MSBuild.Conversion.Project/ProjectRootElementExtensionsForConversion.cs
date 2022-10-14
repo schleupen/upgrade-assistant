@@ -169,7 +169,7 @@ namespace MSBuild.Conversion.Project
 
             var appendTargetFrameworkToOutputPathElement = projectRootElement.CreatePropertyElement(MSBuildFacts.AppendTargetFrameworkToOutputPath);
             appendTargetFrameworkToOutputPathElement.Value = "false";
-            propGroup.PrependChild(appendTargetFrameworkToOutputPathElement);
+            propGroup.AppendChild(appendTargetFrameworkToOutputPathElement);
 
             return projectRootElement;
         }
