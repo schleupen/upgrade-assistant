@@ -133,8 +133,7 @@ namespace MSBuild.Conversion.Facts
             "AnyCPU");
 
         public static ImmutableArray<string> DefaultDebugTypes => ImmutableArray.Create(
-            "full",
-            "pdbonly");
+            "portable");
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1114:Parameter list should follow declaration", Justification = "Readability & clarity of the comment")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.ReadabilityRules", "SA1115:Parameter should follow comma", Justification = "Readability")]
