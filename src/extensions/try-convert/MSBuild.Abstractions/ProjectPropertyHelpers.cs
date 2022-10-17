@@ -161,6 +161,9 @@ namespace MSBuild.Abstractions
             prop.ElementName.Equals(MSBuildFacts.OutputTypeNodeName, StringComparison.OrdinalIgnoreCase)
             && prop.Value.Equals(MSBuildFacts.LibraryOutputType, StringComparison.OrdinalIgnoreCase);
 
+        public static bool IsDocumentationFileType(ProjectPropertyElement prop) =>
+            prop.ElementName.Equals(MSBuildFacts.DocumentationFileNodeName, StringComparison.OrdinalIgnoreCase);
+
         /// <summary>
         /// Checks if an OutputType node is Exe.
         /// </summary>

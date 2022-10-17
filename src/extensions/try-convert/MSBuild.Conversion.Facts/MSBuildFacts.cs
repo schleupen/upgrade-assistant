@@ -288,6 +288,7 @@ namespace MSBuild.Conversion.Facts
         public const string RequiredTargetFrameworkNodeName = "RequiredTargetFramework";
         public const string NameNodeName = "Name";
         public const string DocumentationFileNodeName = "DocumentationFile";
+        public const string GenerateDocumentationFileNodeName = "GenerateDocumentationFile";
         public const string DefaultDocumentationFileLocation = @"bin\$(Configuration)\$(AssemblyName).XML";
         public const string CSharpFileSuffix = ".cs";
         public const string ProjectTypeGuidsNodeName = "ProjectTypeGuids";

@@ -174,6 +174,25 @@ namespace MSBuild.Conversion.Project
             return projectRootElement;
         }
 
+        public static IProjectRootElement ReplaceDocumentationFileProperty(this IProjectRootElement projectRootElement)
+        {
+            foreach (var propGroup in projectRootElement.PropertyGroups)
+            {
+                foreach (var prop in propGroup.Properties)
+                {
+                    if (ProjectPropertyHelpers.IsDocumentationFileType(prop))
+                    {
+                        propGroup.RemoveChild(prop);
+                        var appendTargetFrameworkToOutputPathElement = projectRootElement.CreatePropertyElement(MSBuildFacts.GenerateDocumentationFileNodeName);
+                        appendTargetFrameworkToOutputPathElement.Value = "true";
+                        propGroup.AppendChild(appendTargetFrameworkToOutputPathElement);
+                    }
+                }
+            }
+
+            return projectRootElement;
+        }
+
         public static IProjectRootElement RemoveUnnecessaryPropertiesNotInSDKByDefault(this IProjectRootElement projectRootElement, ProjectStyle projectStyle)
         {
             foreach (var propGroup in projectRootElement.PropertyGroups)

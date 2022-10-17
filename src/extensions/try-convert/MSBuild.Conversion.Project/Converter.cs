@@ -61,6 +61,7 @@ namespace MSBuild.Conversion.Project
                 .RemoveUnnecessaryTargetsIfTheyExist()
                 .RemoveWebExtensions(_sdkBaselineProject.ProjectStyle)
                 .RewriteBuildEvents()
+                .ReplaceDocumentationFileProperty()
                 .ModifyProjectElement();
         }
 
