@@ -182,10 +182,10 @@ namespace MSBuild.Conversion.Project
                 {
                     if (ProjectPropertyHelpers.IsDocumentationFileType(prop))
                     {
+                        var newProperty = projectRootElement.CreatePropertyElement(MSBuildFacts.GenerateDocumentationFileNodeName);
+                        newProperty.Value = string.IsNullOrEmpty(prop.Value.Trim()) ? "false" : "true";
                         propGroup.RemoveChild(prop);
-                        var appendTargetFrameworkToOutputPathElement = projectRootElement.CreatePropertyElement(MSBuildFacts.GenerateDocumentationFileNodeName);
-                        appendTargetFrameworkToOutputPathElement.Value = "true";
-                        propGroup.AppendChild(appendTargetFrameworkToOutputPathElement);
+                        propGroup.AppendChild(newProperty);
                     }
                 }
             }
@@ -295,6 +295,7 @@ namespace MSBuild.Conversion.Project
                     }
                     else if (ProjectItemHelpers.IsReferenceConvertibleToPackageReference(item))
                     {
+                        continue; //Alte Framework Referenzen sollen so bleiben
                         var packageName = NugetHelpers.FindPackageNameFromReferenceName(item.Include);
                         string? version = null;
                         try
