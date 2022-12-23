@@ -15,7 +15,7 @@
     },
     "Upgrade": {
       "commandName": "Project",
-      "commandLineArgs": "upgrade ..\\..\\..\\..\\..\\tests\\tool\\Integration.Tests\\IntegrationScenarios\\MauiSample\\droid\\Original\\EwDavidForms.sln",
+      "commandLineArgs": "upgrade C:\\tfs_JB\\PI\\SB\\Features\\SvcSecTst-383414\\ServiceBus.sln --non-interactive --is-project-root --paket-version:7.0.102-schleupen",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development"
       }

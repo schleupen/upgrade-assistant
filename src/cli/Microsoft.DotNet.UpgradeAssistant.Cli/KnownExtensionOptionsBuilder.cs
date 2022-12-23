@@ -13,6 +13,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
         public IReadOnlyCollection<string> Entrypoints { get; init; } = Array.Empty<string>();
 
         public bool IsProjectRoot { get; init; }
+        public bool AddProps { get; init; }
         public string PaketVersion { get; init; }
     }
 }

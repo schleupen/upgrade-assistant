@@ -42,9 +42,6 @@ namespace Schleupen.CS.PI.Paket
     <add key=""nuget"" value=""https://nexus.schleupen-ag.de/repository/nuget/"" />
     <add key=""schleupen"" value=""https://nexus.schleupen-ag.de/repository/SchleupenNugetPlatformDev/"" />
   </packageSources>
-  <packageRestore>
-     <add key=""enabled"" value=""False"" />
-  </packageRestore>
 </configuration>";
 
         private const string NugetConfigContent = @"<?xml version=""1.0"" encoding=""utf-8""?>
@@ -57,18 +54,16 @@ namespace Schleupen.CS.PI.Paket
     <add key=""nuget"" value=""https://nexus.schleupen-ag.de/repository/nuget/"" />
     <add key=""schleupen"" value=""https://nexus.schleupen-ag.de/repository/SchleupenNugetDev/"" />
   </packageSources>
-  <packageRestore>
-     <add key=""enabled"" value=""False"" />
-  </packageRestore>
 </configuration>";
         private bool _isProjectRoot;
-
+        private readonly bool _addProps;
 
         #endregion
         public AddDefaultConfigFilesStep(ILogger<AddDefaultConfigFilesStep> logger, IOptions<SchleupenOptions> options)
             : base(logger)
         {
             _isProjectRoot = options.Value.IsProjectRoot;
+            _addProps = options.Value.AddProps;
         }
 
         public override IEnumerable<string> DependsOn { get; } = new[]
@@ -108,7 +103,10 @@ namespace Schleupen.CS.PI.Paket
 
             var solutionFile = new FileInfo(context.InputPath);
             var solutionDirectory = solutionFile.Directory;
-            File.WriteAllText(Path.Combine(solutionDirectory.FullName, "Directory.Build.props"), DirectoryBuildPropsContent);
+            if (_addProps)
+            {
+                File.WriteAllText(Path.Combine(solutionDirectory.FullName, "Directory.Build.props"), DirectoryBuildPropsContent);
+            }
             File.WriteAllText(Path.Combine(solutionDirectory.FullName, "NuGet.config"), NugetConfigPlatformContent);
 
             return new UpgradeStepApplyResult(UpgradeStepStatus.Complete, "Config Files added");
