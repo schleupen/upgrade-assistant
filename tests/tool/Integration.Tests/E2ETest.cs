@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AutoMapper.Configuration.Annotations;
 using Microsoft.DotNet.UpgradeAssistant;
 using Microsoft.DotNet.UpgradeAssistant.Cli;
 using Xunit;
@@ -38,12 +39,16 @@ namespace Integration.Tests
 
         [InlineData("PCL", "SamplePCL.csproj", "")]
         [InlineData("WpfSample/csharp", "BeanTrader.sln", "BeanTraderClient.csproj")]
+/*
         [InlineData("WebLibrary/csharp", "WebLibrary.csproj", "")]
         [InlineData("AspNetSample/csharp", "TemplateMvc.csproj", "")]
+*/
         [InlineData("WpfSample/vb", "WpfApp1.sln", "")]
         [InlineData("WCFSample", "ConsoleApp.csproj", "")]
-        [InlineData("MauiSample/droid", "EwDavidForms.sln", "EwDavidForms.Android.csproj")]
-        [InlineData("MauiSample/ios", "EwDavidForms.sln", "EwDavidForms.iOS.csproj")]
+
+        // TODO: [mgoertz] Re-enable after .NET 7 GA
+        // [InlineData("MauiSample/droid", "EwDavidForms.sln", "EwDavidForms.Android.csproj")]
+        // [InlineData("MauiSample/ios", "EwDavidForms.sln", "EwDavidForms.iOS.csproj")]
         [Theory]
         public async Task UpgradeTest(string scenarioPath, string inputFileName, string entrypoint)
         {
@@ -129,6 +134,8 @@ namespace Integration.Tests
                     actualText = actualText.Replace(actualDir.Replace("\\", "\\\\"), "[ACTUAL_PROJECT_ROOT]")
                         .Replace(actualDir.Replace("\\", "/"), "[ACTUAL_PROJECT_ROOT]")
                         .Replace(Directory.GetCurrentDirectory().Replace("\\", "/"), "[UA_PROJECT_BIN]");
+
+                    actualText = Regex.Replace(actualText, "Version=(\\d+\\.){3}([\\da-zA-Z\\-])+", "[VERSION]");
                 }
 
                 if (!string.Equals(expectedText, actualText, StringComparison.Ordinal))
