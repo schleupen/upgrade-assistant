@@ -26,6 +26,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
                     SkipBackup = options.SkipBackup,
                     Entrypoints = options.EntryPoint,
                     IsProjectRoot = options.IsProjectRoot,
+                    AddProps = options.AddProps,
                     PaketVersion = options.PaketVersion
                 });
             })
@@ -42,6 +43,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
             public bool SkipBackup { get; set; }
 
             public bool IsProjectRoot { get; set; }
+            public bool AddProps { get; set; }
             public string PaketVersion { get; set; }
 
             public bool NonInteractive { get; set; }

@@ -12,6 +12,7 @@ namespace Schleupen.CS.PI.Paket
     public class SchleupenOptions
     {
         public bool IsProjectRoot {get; set; }
+        public bool AddProps {get; set; }
         public string PaketVersion {get; set; }
     }
 }

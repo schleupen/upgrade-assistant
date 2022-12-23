@@ -16,8 +16,6 @@ namespace Schleupen.CS.PI.Paket
 {
     internal class FixWorkflowStep : UpgradeStep
     {
-        private readonly bool _isProjectRoot;
-        private readonly string _paketVersion;
         private readonly IProcessRunner _runner;
 
         private IEnumerable<UpgradeStep>? _substeps;
@@ -26,8 +24,6 @@ namespace Schleupen.CS.PI.Paket
         public FixWorkflowStep(ILogger<FixWorkflowStep> logger, IOptions<SchleupenOptions> options, IProcessRunner runner)
             : base(logger)
         {
-            _isProjectRoot = options.Value.IsProjectRoot;
-            _paketVersion = options.Value.PaketVersion;
             _runner = runner;
         }
 

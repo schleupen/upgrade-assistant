@@ -44,6 +44,7 @@ namespace Microsoft.DotNet.UpgradeAssistant.Cli
                 Schleupen = new
                 {
                     IsProjectRoot = options.IsProjectRoot,
+                    AddProps = options.AddProps,
                     PaketVersion = options.PaketVersion
                 }
             });

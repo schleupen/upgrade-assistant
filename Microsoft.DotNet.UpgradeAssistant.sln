@@ -151,6 +151,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.DotNet.UpgradeAssistant.Analysis", "src\components\Microsoft.DotNet.UpgradeAssistant.Analysis\Microsoft.DotNet.UpgradeAssistant.Analysis.csproj", "{B5B6D54F-7782-4CAC-AB13-48619B40465B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "eng", "eng", "{6D0B9445-40A2-48E6-9F04-A83EA207CC3C}"
+	ProjectSection(SolutionItems) = preProject
+		eng\Version.Details.xml = eng\Version.Details.xml
+		eng\Versions.props = eng\Versions.props
+	EndProjectSection
 EndProject
 Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "DependencyValidation", "eng\DependencyValidation\DependencyValidation.modelproj", "{7EE540F0-2904-4306-BF35-842F3D654F25}"
 EndProject
