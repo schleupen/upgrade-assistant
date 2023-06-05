@@ -128,7 +128,7 @@ namespace Schleupen.CS.PI.Paket
             {
                 WorkingDirectory = solutionDirectory.FullName,
                 Command = "dotnet",
-                Arguments = $"restore {context.InputPath}",
+                Arguments = $"restore \"{context.InputPath}\"",
                 EnvironmentVariables = context.GlobalProperties,
                 Name = "dotnet restore solution",
 

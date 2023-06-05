@@ -1,0 +1,1 @@
+ dotnet nuget push "C:\Users\valentin.hamm\source\upgrade-assistant\artifacts\packages\Debug\Shipping\upgrade-assistant.0.4.111-dev.nupkg" --api-key {{HIER-NUGET-API-KEY-EINTRAGEN}} --source https://nexus/repository/Schleupen.CS.Nuget/
